@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#262628"/>
+      <stop offset="1" stop-color="#121213"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3a3b3e"/>
+      <stop offset="0.45" stop-color="#7a7b7f"/>
+      <stop offset="0.7" stop-color="#595a5e"/>
+      <stop offset="1" stop-color="#303134"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2c2c2f"/>
+      <stop offset="0.5" stop-color="#111112"/>
+      <stop offset="1" stop-color="#1d1d1f"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0.5"/>
+      <stop offset="0.3" stop-color="#000" stop-opacity="0"/>
+      <stop offset="0.75" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.6"/>
+    </linearGradient>
+    <filter id="brush" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9 0.004" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.08 0"/>
+    </filter>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect x="40" y="60" width="330" height="900" fill="url(#steel)"/>
+  <rect x="40" y="60" width="330" height="900" filter="url(#brush)"/>
+  <rect x="330" y="160" width="16" height="420" rx="8" fill="#d9d9dc" opacity="0.8"/>
+  <path d="M40 470 H370" stroke="#111" stroke-width="10"/>
+  <rect x="400" y="60" width="400" height="330" fill="url(#steel)"/>
+  <rect x="430" y="150" width="340" height="210" rx="10" fill="url(#glass)"/>
+  <rect x="430" y="104" width="340" height="18" rx="9" fill="#d9d9dc" opacity="0.7"/>
+  <rect x="400" y="410" width="400" height="330" fill="url(#steel)"/>
+  <rect x="430" y="500" width="340" height="210" rx="10" fill="url(#glass)"/>
+  <rect x="430" y="454" width="340" height="18" rx="9" fill="#d9d9dc" opacity="0.7"/>
+  <rect x="400" y="60" width="400" height="680" filter="url(#brush)"/>
+  <rect x="560" y="80" width="80" height="12" rx="3" fill="#63C6C1" opacity="0.9" filter="url(#glow)"/>
+  <rect x="560" y="80" width="80" height="10" rx="3" fill="#bdf0ec"/>
+  <rect x="830" y="60" width="330" height="900" fill="url(#steel)"/>
+  <rect x="830" y="60" width="330" height="900" filter="url(#brush)"/>
+  <circle cx="995" cy="330" r="120" fill="#141415" stroke="#9a9a9e" stroke-width="16"/>
+  <circle cx="995" cy="330" r="96" fill="none" stroke="#63C6C1" stroke-width="3" opacity="0.8"/>
+  <rect x="870" y="560" width="250" height="14" rx="7" fill="#d9d9dc" opacity="0.6"/>
+  <path d="M0 760 H1200" stroke="#63C6C1" stroke-width="3" opacity="0.4"/>
+  <rect width="1200" height="900" fill="url(#fade)"/>
+</svg>

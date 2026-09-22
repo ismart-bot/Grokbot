@@ -1,0 +1,66 @@
+---
+import { brands } from '../data/home';
+---
+
+<ul class="brands" aria-label="Brands we commonly service">
+  {brands.map((b) => <li>{b}</li>)}
+</ul>
+<p class="brands__note">
+  Representative of the brands we see most — not a complete list. Aria is an independent repair service, not
+  affiliated with or authorized by these manufacturers.
+</p>
+
+<style>
+  .brands {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    list-style: none;
+  }
+
+  @media (min-width: 640px) {
+    .brands {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .brands {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+  }
+
+  .brands li {
+    display: grid;
+    place-items: center;
+    min-height: 64px;
+    padding: 10px 12px;
+    border: 1px solid var(--paper-line);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--on-paper);
+    font-size: 1.0625rem;
+    font-weight: 750;
+    letter-spacing: 0.01em;
+    text-align: center;
+  }
+
+  :global(.band--char) .brands li,
+  :global(.band--ink) .brands li {
+    background: var(--char-2);
+    border-color: var(--line);
+    color: var(--on-dark);
+  }
+
+  .brands__note {
+    margin-top: 16px;
+    font-size: 0.875rem;
+    color: var(--on-paper-2);
+    max-width: 90ch;
+  }
+
+  :global(.band--char) .brands__note,
+  :global(.band--ink) .brands__note {
+    color: var(--on-dark-3);
+  }
+</style>

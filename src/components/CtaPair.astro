@@ -1,0 +1,30 @@
+---
+import Icon from './Icon.astro';
+import { requestHref, site } from '../config/site';
+
+interface Props {
+  id?: string;
+  /** Registers this pair with the mobile sticky bar so the two never show at once. */
+  group?: boolean;
+  requestLabel?: string;
+  requestTo?: string;
+  track: string;
+  class?: string;
+}
+
+const {
+  id,
+  group = true,
+  requestLabel = 'Request service',
+  requestTo = requestHref,
+  track,
+  class: className,
+} = Astro.props;
+---
+
+<div class:list={['cta-pair', className]} id={id} data-cta-group={group ? '' : undefined}>
+  <a class="btn btn--primary" href={site.phone.href} data-track={`call-${track}`}>
+    <Icon name="phone" size={20} />Call {site.phone.display}
+  </a>
+  <a class="btn btn--ghost" href={requestTo} data-track={`request-${track}`}>{requestLabel}</a>
+</div>

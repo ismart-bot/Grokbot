@@ -1,0 +1,247 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { site } from '../config/site';
+import { services, serviceHref } from '../data/services';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer band band--ink band--seam">
+  <div class="frame">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <Logo />
+        <p>
+          Residential appliance repair and install for Vaughan homes — Woodbridge included. Eight appliance lanes,
+          diagnosed on site and quoted before any work.
+        </p>
+        <a class="footer-phone" href={site.phone.href} data-track="call-footer">
+          <Icon name="phone" size={22} />{site.phone.display}
+        </a>
+      </div>
+
+      <nav class="footer-col" aria-labelledby="f-services">
+        <p class="footer-h" id="f-services">Services</p>
+        <ul>
+          {
+            services.map((s) => (
+              <li>
+                <a href={serviceHref(s.slug)}>
+                  <span class="num">{s.num}</span> {s.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-labelledby="f-company">
+        <p class="footer-h" id="f-company">Company</p>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/services/">All services</a></li>
+          <li><a href="/service-area/">Service area</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <p class="footer-h">Contact</p>
+        <dl class="nap">
+          <div>
+            <dt>Phone</dt>
+            <dd><a href={site.phone.href} data-track="call-footer-nap">{site.phone.display}</a></dd>
+          </div>
+          <div>
+            <dt>Email</dt>
+            <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+          </div>
+          <div>
+            <dt>Hours</dt>
+            <dd>{site.hours.long}</dd>
+          </div>
+          <div>
+            <dt>Area</dt>
+            <dd>Vaughan, Ontario only — Woodbridge included</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="footer-scope">
+      <p class="footer-h">Out of scope</p>
+      <ul>
+        <li><Icon name="x" size={16} />No gas-line work</li>
+        <li><Icon name="x" size={16} />No HVAC, furnaces or air conditioning</li>
+        <li><Icon name="x" size={16} />No calls outside Vaughan</li>
+      </ul>
+    </div>
+
+    <div class="footer-base">
+      <p>© {year} {site.name} · Vaughan, Ontario</p>
+      <p>
+        Independent repair service. Brand names are trademarks of their owners; no affiliation or manufacturer
+        authorization is implied.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: clamp(52px, 5.5vw, 88px) 28px;
+  }
+
+  .footer-grid {
+    display: grid;
+    gap: 40px 32px;
+  }
+
+  @media (min-width: 640px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .footer-grid {
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr) minmax(0, 0.7fr) minmax(0, 1.15fr);
+    }
+  }
+
+  .footer-brand {
+    display: grid;
+    gap: 18px;
+    align-content: start;
+  }
+
+  .footer-brand p {
+    max-width: 44ch;
+    color: var(--on-dark-2);
+  }
+
+  .footer-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+    font-weight: 800;
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .footer-phone:hover {
+    color: var(--teal-hi);
+    text-decoration: underline;
+  }
+
+  .footer-h {
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: grid;
+    gap: 2px;
+  }
+
+  .footer-col a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 5px 0;
+    color: var(--on-dark);
+    text-decoration: none;
+  }
+
+  .footer-col a:hover {
+    color: var(--teal-hi);
+    text-decoration: underline;
+  }
+
+  .nap {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+  }
+
+  .nap div {
+    display: grid;
+    gap: 2px;
+  }
+
+  .nap dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-dark-3);
+  }
+
+  .nap dd {
+    margin: 0;
+    color: var(--on-dark);
+    overflow-wrap: anywhere;
+  }
+
+  .nap dd a {
+    padding: 0;
+  }
+
+  .footer-scope {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 28px;
+    margin-top: 44px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .footer-scope .footer-h {
+    margin: 0;
+  }
+
+  .footer-scope ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    list-style: none;
+  }
+
+  .footer-scope li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9375rem;
+    color: var(--on-dark-2);
+  }
+
+  .footer-scope li :global(svg) {
+    color: var(--teal);
+  }
+
+  .footer-base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px 32px;
+    padding-top: 22px;
+    font-size: 0.875rem;
+    color: var(--on-dark-3);
+  }
+
+  .footer-base p:last-child {
+    max-width: 70ch;
+  }
+</style>

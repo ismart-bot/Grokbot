@@ -1,0 +1,25 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  id: string;
+  as?: 'h1' | 'h2';
+}
+
+const { eyebrow, title, id, as: Tag = 'h2' } = Astro.props;
+const hasAside = Astro.slots.has('default');
+---
+
+<div class:list={['shead', { 'shead--solo': !hasAside }]}>
+  <div>
+    <p class="eyebrow">{eyebrow}</p>
+    <Tag id={id}>{title}</Tag>
+  </div>
+  {
+    hasAside && (
+      <div class="shead__aside">
+        <slot />
+      </div>
+    )
+  }
+</div>

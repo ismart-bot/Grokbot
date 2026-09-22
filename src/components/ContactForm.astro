@@ -1,0 +1,324 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../config/site';
+import { services } from '../data/services';
+
+const endpoint = site.formEndpoint;
+const pending = endpoint === '';
+const origin = Astro.site ?? new URL('https://ariaappliancerepair.com');
+const thankYou = new URL('/thank-you/', origin).href;
+---
+
+<form
+  class="rform"
+  id="request-form"
+  data-request-form
+  data-hide-sticky
+  data-cta-group
+  data-endpoint={endpoint}
+  data-email={site.email}
+  action={pending ? `mailto:${site.email}` : endpoint}
+  method="post"
+  enctype={pending ? 'text/plain' : undefined}
+  aria-describedby="rform-status"
+>
+  <input type="hidden" name="variant" value={site.variant} />
+  <input type="hidden" name="source" value="contact-page" />
+  {!pending && <input type="hidden" name="redirect" value={thankYou} />}
+
+  <div class="rform__row">
+    <div class="field">
+      <label for="f-name">Name <span class="req">required</span></label>
+      <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Full name" required />
+    </div>
+    <div class="field">
+      <label for="f-phone">Phone <span class="req">required</span></label>
+      <input
+        id="f-phone"
+        name="phone"
+        type="tel"
+        inputmode="tel"
+        autocomplete="tel"
+        placeholder="Best number to reach you"
+        pattern="[0-9+()\-.\s]{7,}"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="f-email">Email <span class="opt">optional</span></label>
+    <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" />
+  </div>
+
+  <div class="rform__row">
+    <div class="field">
+      <label for="f-appliance">Appliance <span class="req">required</span></label>
+      <select id="f-appliance" name="appliance" required>
+        <option value="">Choose an appliance</option>
+        {services.map((s) => <option value={s.name}>{s.num} · {s.name}</option>)}
+        <option value="Not sure">Not sure — I’ll describe it</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="f-callback">Best time to call back</label>
+      <select id="f-callback" name="callback">
+        <option value="Any time 8am–10pm">Any time, 8am–10pm</option>
+        <option value="Morning (8am–12pm)">Morning (8am–12pm)</option>
+        <option value="Afternoon (12pm–5pm)">Afternoon (12pm–5pm)</option>
+        <option value="Evening (5pm–10pm)">Evening (5pm–10pm)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="f-hood">Neighbourhood in Vaughan <span class="req">required</span></label>
+    <input
+      id="f-hood"
+      name="neighbourhood"
+      type="text"
+      list="vaughan-hoods"
+      autocomplete="address-level3"
+      placeholder="e.g. Woodbridge, Maple, Concord"
+      aria-describedby="f-hood-hint"
+      required
+    />
+    <datalist id="vaughan-hoods">
+      {site.area.neighbourhoods.map((n) => <option value={n} />)}
+    </datalist>
+    <p class="hint" id="f-hood-hint">Vaughan only — we’ll confirm your address is in area when we call.</p>
+  </div>
+
+  <div class="field">
+    <label for="f-message">Message / appliance notes</label>
+    <textarea
+      id="f-message"
+      name="message"
+      rows="5"
+      placeholder="Brand and model if handy, what it’s doing, any error code, and when it started"></textarea>
+  </div>
+
+  {
+    pending ? (
+      <div class="rform__status" id="rform-status" role="note">
+        <Icon name="alert" size={20} />
+        <p>
+          <strong>Online booking isn’t connected yet.</strong> Fill this in and choose “Email this request” — your
+          own email app opens with everything filled in, addressed to {site.email}. For same-day, calling is faster.
+        </p>
+      </div>
+    ) : (
+      <p class="hint" id="rform-status">
+        We reply inside {site.hours.long}. For same-day, calling is faster.
+      </p>
+    )
+  }
+
+  <div class="rform__actions">
+    <button class="btn btn--primary" type="submit" data-track={pending ? 'request-email-compose' : 'request-submit'}>
+      {pending ? <Icon name="mail" size={20} /> : null}
+      {pending ? 'Email this request' : 'Request service'}
+    </button>
+    <a class="btn btn--ghost" href={site.phone.href} data-track="call-form">
+      <Icon name="phone" size={20} />Call {site.phone.display}
+    </a>
+  </div>
+
+  <p class="rform__result" role="status" aria-live="polite" hidden></p>
+  <p class="rform__privacy">We use these details only to contact you about this request.</p>
+</form>
+
+<style>
+  .rform {
+    display: grid;
+    gap: 18px;
+  }
+
+  .rform__row {
+    display: grid;
+    gap: 18px;
+  }
+
+  @media (min-width: 620px) {
+    .rform__row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .field {
+    display: grid;
+    gap: 7px;
+    align-content: start;
+  }
+
+  label {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-dark);
+  }
+
+  .req,
+  .opt {
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--on-dark-3);
+  }
+
+  .req {
+    color: var(--teal);
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 14px;
+    background: var(--ink);
+    border: 1px solid #5c5c60;
+    border-radius: var(--radius-sm);
+    color: var(--on-dark);
+    font-size: 1rem;
+    line-height: 1.4;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  textarea {
+    min-height: 130px;
+    resize: vertical;
+  }
+
+  select {
+    appearance: none;
+    padding-right: 40px;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--teal) 50%), linear-gradient(135deg, var(--teal) 50%, transparent 50%);
+    background-position:
+      calc(100% - 20px) 52%,
+      calc(100% - 14px) 52%;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+  }
+
+  ::placeholder {
+    color: #9d9da1;
+    opacity: 1;
+  }
+
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: #7a7a7e;
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(99, 198, 193, 0.35);
+  }
+
+  input:user-invalid,
+  select:user-invalid {
+    border-color: #e59a8f;
+  }
+
+  .hint {
+    font-size: 0.875rem;
+    color: var(--on-dark-2);
+  }
+
+  .rform__status {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--teal-edge);
+    border-left: 4px solid var(--teal);
+    border-radius: var(--radius-sm);
+    background: var(--teal-wash);
+    font-size: 0.9375rem;
+  }
+
+  .rform__status :global(svg) {
+    color: var(--teal);
+    margin-top: 2px;
+  }
+
+  .rform__status p {
+    color: var(--on-dark-2);
+  }
+
+  .rform__status strong {
+    color: var(--on-dark);
+  }
+
+  .rform__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (max-width: 559.98px) {
+    .rform__actions .btn {
+      width: 100%;
+    }
+  }
+
+  .rform__result {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--char-3);
+    font-size: 0.9375rem;
+  }
+
+  .rform__privacy {
+    font-size: 0.875rem;
+    color: var(--on-dark-3);
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[data-request-form]');
+
+  // Pending mode (no CRM endpoint): compose the request in the visitor's own mail app. Nothing is sent by us.
+  if (form && !form.dataset.endpoint) {
+    const result = form.querySelector<HTMLElement>('.rform__result');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const get = (key: string) => String(data.get(key) ?? '').trim();
+
+      const subject = `Service request: ${get('appliance') || 'Appliance'} — ${get('neighbourhood') || 'Vaughan'}`;
+      const body = [
+        `Name: ${get('name')}`,
+        `Phone: ${get('phone')}`,
+        `Email: ${get('email') || '—'}`,
+        `Appliance: ${get('appliance')}`,
+        `Neighbourhood (Vaughan): ${get('neighbourhood')}`,
+        `Best time to call back: ${get('callback')}`,
+        '',
+        'Notes:',
+        get('message') || '—',
+      ].join('\n');
+
+      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      if (result) {
+        result.hidden = false;
+        result.textContent = `Your email app should open with the request filled in. If it didn’t, email ${form.dataset.email} or call +1-888-642-0352.`;
+      }
+    });
+  }
+</script>

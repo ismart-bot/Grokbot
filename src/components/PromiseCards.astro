@@ -1,0 +1,68 @@
+---
+import Icon from './Icon.astro';
+import { promises } from '../data/home';
+---
+
+<ul class="promise-grid">
+  {
+    promises.map((p) => (
+      <li class="prom card">
+        <span class="prom__icon">
+          <Icon name={p.icon} size={26} />
+        </span>
+        <h3>{p.title}</h3>
+        <p>{p.body}</p>
+        <p class="prom__foot">{p.foot}</p>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  /* Always visible: no reveal, no opacity tricks. */
+  .promise-grid {
+    display: grid;
+    gap: var(--gap);
+    list-style: none;
+  }
+
+  @media (min-width: 860px) {
+    .promise-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .prom {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-top: 3px solid var(--teal);
+    opacity: 1;
+  }
+
+  .prom__icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: var(--teal-wash);
+    border: 1px solid var(--teal-edge);
+    color: var(--teal);
+  }
+
+  .prom p {
+    color: var(--on-dark-2);
+  }
+
+  .prom .prom__foot {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+</style>
