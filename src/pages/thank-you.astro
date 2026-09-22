@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../config/site';
+
+const steps = [
+  {
+    title: 'We call you back',
+    body: 'Someone from Aria calls the number you gave, inside Monday–Sunday, 8am–10pm. Keep your phone nearby.',
+  },
+  {
+    title: 'We confirm the window',
+    body: 'We check the appliance, your Vaughan address and the symptom, then confirm a visit window — same-day when available.',
+  },
+  {
+    title: 'Diagnose, quote, repair',
+    body: 'The technician diagnoses on site and quotes parts and labour before starting. Warranty terms go on your invoice.',
+  },
+];
+---
+
+<BaseLayout
+  title="Request received | Aria Appliance Repair, Vaughan"
+  description="Thanks — your appliance repair request reached Aria Appliance Repair. We’ll call to confirm a Vaughan window inside Monday–Sunday, 8am–10pm."
+  noindex
+>
+  <PageHero
+    eyebrow="Request received"
+    title="Thanks — your request is in."
+    lede={`We’ll call you back to confirm a window inside ${site.hours.long}. If it’s urgent, or you’d rather talk now, call us directly — it’s the fastest way to get on today’s schedule.`}
+    requestLabel="Back to home"
+    requestTo="/"
+    track="hero-thanks"
+  >
+    <ul class="chips">
+      <li class="chip"><Icon name="clock" />{site.hours.short}</li>
+      <li class="chip"><Icon name="pin" />Vaughan only</li>
+    </ul>
+  </PageHero>
+
+  <section class="band band--paper band--seam" aria-labelledby="next-title">
+    <div class="frame">
+      <SectionHead eyebrow="What happens next" title="Three steps from here" id="next-title">
+        <p>
+          While you wait: if the appliance is leaking, close its water supply; if you smell burning, switch it off at
+          the breaker.
+        </p>
+      </SectionHead>
+      <ProcessSteps steps={steps} />
+    </div>
+  </section>
+</BaseLayout>
