@@ -1,0 +1,99 @@
+---
+import Icon from './Icon.astro';
+import { requestHref, site } from '../config/site';
+---
+
+<div class="sticky-cta" id="sticky-cta" role="region" aria-label="Call or request service" inert>
+  <a class="btn btn--primary" href={site.phone.href} data-track="call-sticky">
+    <Icon name="phone" size={20} />
+    <span><span class="sticky-cta__word">Call </span>{site.phone.display}</span>
+  </a>
+  <a class="btn btn--ghost" href={requestHref} data-track="request-sticky">Request</a>
+</div>
+
+<style>
+  .sticky-cta {
+    display: none;
+  }
+
+  /* Mobile only. Hidden until every on-page Call/Request group ([data-cta-group], starting with
+     #hero-ctas) is out of the viewport, so there is never a second pair on screen. */
+  @media (max-width: 767.98px) {
+    .sticky-cta {
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: 70;
+      display: grid;
+      grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+      gap: 8px;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+      background: rgba(26, 26, 27, 0.97);
+      border-top: 1px solid var(--line);
+      box-shadow: 0 -12px 28px -10px rgba(0, 0, 0, 0.65);
+      transform: translateY(110%);
+      visibility: hidden;
+      transition:
+        transform 0.22s ease,
+        visibility 0s linear 0.22s;
+    }
+
+    .sticky-cta.is-shown {
+      transform: none;
+      visibility: visible;
+      transition:
+        transform 0.22s ease,
+        visibility 0s;
+    }
+
+    .sticky-cta .btn {
+      min-height: 50px;
+      padding-inline: 12px;
+    }
+  }
+
+  @media (max-width: 359.98px) {
+    .sticky-cta__word {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const sticky = document.getElementById('sticky-cta');
+
+  if (sticky && 'IntersectionObserver' in window) {
+    const visibleGroups = new Set<Element>();
+    let formFocused = false;
+
+    const update = () => {
+      const show = visibleGroups.size === 0 && !formFocused;
+      sticky.classList.toggle('is-shown', show);
+      sticky.inert = !show;
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) visibleGroups.add(entry.target);
+        else visibleGroups.delete(entry.target);
+      }
+      update();
+    });
+
+    document.querySelectorAll('[data-cta-group]').forEach((group) => observer.observe(group));
+
+    document.querySelectorAll<HTMLElement>('[data-hide-sticky]').forEach((zone) => {
+      zone.addEventListener('focusin', () => {
+        formFocused = true;
+        update();
+      });
+      zone.addEventListener('focusout', (event) => {
+        if (!zone.contains(event.relatedTarget as Node | null)) {
+          formFocused = false;
+          update();
+        }
+      });
+    });
+
+    if (!document.querySelector('[data-cta-group]')) update();
+  }
+</script>

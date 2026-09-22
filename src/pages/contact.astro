@@ -1,0 +1,282 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../config/site';
+
+const nextSteps = [
+  'We read your request and call the number you gave, inside Monday–Sunday, 8am–10pm.',
+  'We confirm the appliance, your Vaughan address and a real visit window — same-day when available.',
+  'A technician diagnoses on site and quotes parts and labour before any work begins.',
+];
+---
+
+<BaseLayout
+  title="Contact Aria Appliance Repair | Call +1-888-642-0352 | Vaughan"
+  description="Call +1-888-642-0352 or request a repair window online. Aria Appliance Repair serves Vaughan only, Woodbridge included, Monday–Sunday 8am–10pm. contact@ariaappliancerepair.com."
+>
+  <PageHero
+    eyebrow="Contact · Vaughan"
+    title="Call first — or request a window."
+    lede="Phone is the fastest path: a two-minute call gets you a real window. The form is for non-urgent requests — we confirm timing inside Monday–Sunday, 8am–10pm. Vaughan only, Woodbridge included."
+    requestLabel="Jump to the form"
+    requestTo="#request"
+    track="hero-contact"
+  >
+    <ul class="chips">
+      <li class="chip"><Icon name="clock" />{site.hours.short}</li>
+      <li class="chip"><Icon name="x" />Not 24/7</li>
+    </ul>
+    <div slot="aside" class="direct">
+      <p class="direct__label">Direct line</p>
+      <a class="direct__phone" href={site.phone.href} data-track="call-contact-direct">{site.phone.display}</a>
+      <a class="direct__email" href={`mailto:${site.email}`}><Icon name="mail" size={18} />{site.email}</a>
+      <dl class="direct__facts">
+        <div>
+          <dt>Hours</dt>
+          <dd>{site.hours.long}</dd>
+        </div>
+        <div>
+          <dt>Area</dt>
+          <dd>Vaughan only · Woodbridge included</dd>
+        </div>
+        <div>
+          <dt>Scope</dt>
+          <dd>8 residential appliances · no gas lines · no HVAC</dd>
+        </div>
+      </dl>
+    </div>
+  </PageHero>
+
+  <section class="band band--char band--seam" id="request" aria-labelledby="request-title">
+    <div class="frame request-grid">
+      <div class="request-main">
+        <p class="eyebrow">Request service</p>
+        <h2 id="request-title">Tell us what’s going on</h2>
+        <p class="lede">
+          Name, phone, appliance and neighbourhood are enough. Add the brand, model and symptom if you have them —
+          it helps us bring the right parts.
+        </p>
+        <ContactForm />
+      </div>
+
+      <aside class="request-aside" aria-label="Contact details and what happens next">
+        <div class="acard acard--phone">
+          <p class="acard__label">Phone-first</p>
+          <a class="acard__phone" href={site.phone.href} data-track="call-contact-aside">
+            <Icon name="phone" size={22} />{site.phone.display}
+          </a>
+          <ul class="acard__facts">
+            <li><Icon name="mail" size={18} /><a href={`mailto:${site.email}`}>{site.email}</a></li>
+            <li><Icon name="clock" size={18} />{site.hours.long}</li>
+            <li><Icon name="pin" size={18} />Vaughan, Ontario only</li>
+          </ul>
+        </div>
+
+        <div class="acard">
+          <p class="acard__label">Why a call beats the form</p>
+          <p>
+            A two-minute call lets us triage urgency, confirm your address is inside Vaughan, and offer same-day when
+            the schedule is open — faster than waiting on a reply.
+          </p>
+        </div>
+
+        <div class="acard">
+          <p class="acard__label">What happens next</p>
+          <ol class="acard__steps">
+            {
+              nextSteps.map((step, i) => (
+                <li>
+                  <span class="num">{String(i + 1).padStart(2, '0')}</span>
+                  <span>{step}</span>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <div class="acard">
+          <p class="acard__label">Service area clarity</p>
+          <p>
+            We schedule inside Vaughan city limits only. Woodbridge, Maple, Concord and Kleinburg are Vaughan
+            neighbourhoods — all covered. We don’t service gas lines or HVAC, furnaces or air conditioning.
+          </p>
+          <a class="link-arrow" href="/service-area/">Service area details <Icon name="arrow" /></a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .direct {
+    display: grid;
+    gap: 12px;
+    padding: clamp(22px, 2.4vw, 32px);
+    background: var(--char);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--teal);
+    border-radius: var(--radius-sm);
+  }
+
+  .direct__label,
+  .acard__label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+
+  .direct__phone {
+    font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .direct__phone:hover {
+    color: var(--teal-hi);
+    text-decoration: underline;
+  }
+
+  .direct__email {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    overflow-wrap: anywhere;
+    color: var(--on-dark);
+  }
+
+  .direct__facts {
+    display: grid;
+    gap: 10px;
+    margin: 6px 0 0;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .direct__facts div {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 12px;
+  }
+
+  .direct__facts dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-dark-3);
+    padding-top: 3px;
+  }
+
+  .direct__facts dd {
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+
+  .request-grid {
+    display: grid;
+    gap: 40px 56px;
+    align-items: start;
+  }
+
+  @media (min-width: 1000px) {
+    .request-grid {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    }
+  }
+
+  .request-main h2 {
+    margin-bottom: 12px;
+  }
+
+  .request-main .lede {
+    margin-bottom: 26px;
+  }
+
+  .request-aside {
+    display: grid;
+    gap: 16px;
+  }
+
+  @media (min-width: 1000px) {
+    .request-aside {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+    }
+  }
+
+  .acard {
+    display: grid;
+    gap: 10px;
+    padding: 22px;
+    background: var(--char-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+  }
+
+  .acard p:not(.acard__label) {
+    font-size: 0.9375rem;
+    color: var(--on-dark-2);
+  }
+
+  .acard--phone {
+    background: var(--ink);
+    border-left: 4px solid var(--teal);
+  }
+
+  .acard__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .acard__phone:hover {
+    color: var(--teal-hi);
+    text-decoration: underline;
+  }
+
+  .acard__facts {
+    display: grid;
+    gap: 8px;
+    list-style: none;
+    font-size: 0.9375rem;
+  }
+
+  .acard__facts li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-wrap: anywhere;
+  }
+
+  .acard__facts :global(svg) {
+    color: var(--teal);
+    flex: none;
+  }
+
+  .acard__steps {
+    display: grid;
+    gap: 10px;
+    list-style: none;
+    font-size: 0.9375rem;
+    color: var(--on-dark-2);
+  }
+
+  .acard__steps li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 8px;
+  }
+</style>

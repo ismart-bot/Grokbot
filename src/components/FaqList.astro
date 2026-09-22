@@ -1,0 +1,56 @@
+---
+import type { QA } from '../data/services';
+
+interface Props {
+  items: QA[];
+}
+const { items } = Astro.props;
+---
+
+<div class="faq">
+  {
+    items.map((item) => (
+      <div class="faq__item">
+        <h3>{item.q}</h3>
+        <p>{item.a}</p>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  /* Answers are always open — no accordion hiding content. */
+  .faq {
+    display: grid;
+  }
+
+  .faq__item {
+    display: grid;
+    gap: 8px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .faq__item:last-child {
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  :global(.band--paper) .faq__item,
+  :global(.band--paper-2) .faq__item {
+    border-color: var(--paper-line);
+  }
+
+  .faq h3 {
+    font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  }
+
+  .faq p {
+    max-width: 68ch;
+    color: var(--on-dark-2);
+  }
+
+  :global(.band--paper) .faq p,
+  :global(.band--paper-2) .faq p {
+    color: var(--on-paper-2);
+  }
+</style>

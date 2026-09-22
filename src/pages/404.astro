@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ServiceCards from '../components/ServiceCards.astro';
+---
+
+<BaseLayout
+  title="Page not found | Aria Appliance Repair, Vaughan"
+  description="That page isn’t here. Find your appliance below or call Aria Appliance Repair at +1-888-642-0352."
+  noindex
+>
+  <PageHero
+    eyebrow="404 · Page not found"
+    title="That page isn’t here."
+    lede="The link may be old or mistyped. Pick your appliance below, or call — we’ll get you to the right repair in a couple of minutes."
+    requestLabel="All services"
+    requestTo="/services/"
+    track="hero-404"
+  />
+
+  <section class="band band--char band--seam" aria-labelledby="svc-title">
+    <div class="frame">
+      <SectionHead eyebrow="Services · 01–08" title="Find your appliance" id="svc-title" />
+      <ServiceCards />
+    </div>
+  </section>
+</BaseLayout>

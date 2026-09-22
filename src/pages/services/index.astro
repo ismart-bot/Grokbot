@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import ServiceCards from '../../components/ServiceCards.astro';
+import ProcessSteps from '../../components/ProcessSteps.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import { site } from '../../config/site';
+import { homeProcess } from '../../data/home';
+import { services, serviceHref } from '../../data/services';
+---
+
+<BaseLayout
+  title="Appliance Repair Services in Vaughan | 8 Appliances, Clear Scope | Aria"
+  description="Refrigerator, electric oven & stove, washer, dryer, dishwasher, range hood, steam unit and sauna unit repair and install across Vaughan. No gas lines, no HVAC. Call +1-888-642-0352."
+>
+  <PageHero
+    eyebrow="Services · Vaughan"
+    title="Eight appliances. Clear scope."
+    lede="Residential repair and install for the appliances Vaughan households actually use. Pick your appliance below — each page covers symptoms, what’s included, parts we test and how a visit runs. No gas lines. No HVAC."
+    image="services-overview"
+    track="hero-services"
+  >
+    <ul class="chips">
+      <li class="chip"><Icon name="clock" />{site.hours.short}</li>
+      <li class="chip"><Icon name="pin" />Vaughan only</li>
+    </ul>
+  </PageHero>
+
+  <section class="band band--char band--seam" aria-labelledby="choose-title">
+    <div class="frame">
+      <SectionHead eyebrow="Primary services · 01–08" title="Choose your appliance" id="choose-title">
+        <p>
+          Each card shows what’s covered and the three problems we’re called about most. Every lane is diagnosed on
+          site and quoted before any work.
+        </p>
+      </SectionHead>
+      <ServiceCards detailed headingLevel="h3" />
+    </div>
+  </section>
+
+  <section class="band band--ink" aria-labelledby="matrix-title">
+    <div class="frame">
+      <SectionHead eyebrow="At a glance" title="What each lane covers" id="matrix-title">
+        <p>Repair and install scope side by side, so you can see where your job fits before you call.</p>
+      </SectionHead>
+      <div class="matrix-wrap" role="region" aria-labelledby="matrix-title" tabindex="0">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th scope="col">Appliance</th>
+              <th scope="col">Common calls</th>
+              <th scope="col">Install scope</th>
+              <th scope="col">Boundary</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              services.map((s) => (
+                <tr>
+                  <th scope="row">
+                    <a href={serviceHref(s.slug)}>
+                      <span class="num">{s.num}</span> {s.name}
+                    </a>
+                  </th>
+                  <td>{s.symptoms.slice(0, 3).map((x) => x.title).join(' · ')}</td>
+                  <td>{s.install}</td>
+                  <td>{s.boundary}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--paper" aria-labelledby="process-title">
+    <div class="frame">
+      <SectionHead eyebrow="Every visit" title="How every service call runs" id="process-title">
+        <p>The same three steps whichever appliance it is — so you always know what happens next.</p>
+      </SectionHead>
+      <ProcessSteps steps={homeProcess} />
+    </div>
+  </section>
+
+  <section class="band band--paper-2" id="out-of-scope" aria-labelledby="scope-title">
+    <div class="frame">
+      <SectionHead eyebrow="Out of scope" title="What we don’t do" id="scope-title">
+        <p>
+          Saying no protects the jobs we do well. If you need gas-line or HVAC work, we’ll tell you on the call
+          before anyone makes a wasted trip.
+        </p>
+      </SectionHead>
+      <ul class="scope-grid">
+        {
+          site.scope.doesNot.map((item) => (
+            <li class="card">
+              <span class="scope-icon">
+                <Icon name="x" size={22} />
+              </span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Not sure which page fits?"
+    body={`Call ${site.phone.display} and describe the symptom — we’ll route you to the right repair and tell you honestly if it’s outside our scope.`}
+    track="band-services"
+  />
+</BaseLayout>
+
+<style>
+  .matrix-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+  }
+
+  .matrix {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+
+  .matrix th,
+  .matrix td {
+    padding: 14px 18px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .matrix thead th {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    background: var(--char);
+  }
+
+  .matrix tbody th {
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  .matrix tbody th a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .matrix tbody th a:hover {
+    color: var(--teal);
+    text-decoration: underline;
+  }
+
+  .matrix td {
+    color: var(--on-dark-2);
+  }
+
+  .matrix tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+
+  .matrix tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .scope-grid {
+    display: grid;
+    gap: var(--gap);
+    list-style: none;
+  }
+
+  @media (min-width: 760px) {
+    .scope-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .scope-grid .card {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    border-left: 4px solid var(--teal-deep);
+  }
+
+  .scope-icon {
+    color: var(--teal-deep);
+  }
+
+  .scope-grid p {
+    color: var(--on-paper-2);
+  }
+</style>

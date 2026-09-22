@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bg" cx="0.55" cy="0.5" r="0.8">
+      <stop offset="0" stop-color="#303033"/>
+      <stop offset="1" stop-color="#141415"/>
+    </radialGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)">
+      <path d="M60 0 H0 V60" fill="none" stroke="#fff" stroke-opacity="0.06" stroke-width="2"/>
+    </pattern>
+    <pattern id="gridMajor" width="240" height="240" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)">
+      <path d="M240 0 H0 V240" fill="none" stroke="#fff" stroke-opacity="0.12" stroke-width="5"/>
+    </pattern>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <radialGradient id="pulse" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#63C6C1" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#63C6C1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vig" cx="0.55" cy="0.5" r="0.75">
+      <stop offset="0.55" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.65"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect width="1200" height="900" fill="url(#grid)"/>
+  <rect width="1200" height="900" fill="url(#gridMajor)"/>
+  <path d="M-40 690 C220 640 330 720 560 610 S920 520 1260 560" fill="none" stroke="#fff" stroke-opacity="0.1" stroke-width="18"/>
+  <path d="M-40 690 C220 640 330 720 560 610 S920 520 1260 560" fill="none" stroke="#1a1a1b" stroke-opacity="0.8" stroke-width="10"/>
+  <path d="M300 -20 C340 200 260 420 330 920" fill="none" stroke="#fff" stroke-opacity="0.08" stroke-width="12"/>
+  <path d="M250 180 L930 110 L1010 690 L320 770 Z" fill="#63C6C1" fill-opacity="0.05" stroke="#63C6C1" stroke-width="3" stroke-dasharray="14 10" opacity="0.8"/>
+  <circle cx="640" cy="420" r="170" fill="url(#pulse)"/>
+  <circle cx="640" cy="420" r="70" fill="none" stroke="#63C6C1" stroke-width="2" opacity="0.5"/>
+  <circle cx="640" cy="420" r="120" fill="none" stroke="#63C6C1" stroke-width="1.5" opacity="0.25"/>
+  <path d="M640 452 C640 452 598 404 598 376 A42 42 0 0 1 682 376 C682 404 640 452 640 452 Z" fill="#63C6C1" filter="url(#glow)" opacity="0.6"/>
+  <path d="M640 452 C640 452 598 404 598 376 A42 42 0 0 1 682 376 C682 404 640 452 640 452 Z" fill="#63C6C1"/>
+  <circle cx="640" cy="376" r="15" fill="#1a1a1b"/>
+  <rect width="1200" height="900" fill="url(#vig)"/>
+</svg>

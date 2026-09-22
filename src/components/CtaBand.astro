@@ -1,0 +1,64 @@
+---
+import CtaPair from './CtaPair.astro';
+import Icon from './Icon.astro';
+import { site } from '../config/site';
+
+interface Props {
+  title: string;
+  body: string;
+  track: string;
+  id?: string;
+}
+
+const { title, body, track, id = 'cta-band' } = Astro.props;
+---
+
+<section class="band band--ink band--seam cta-band" aria-labelledby={`${id}-title`}>
+  <div class="frame cta-band__grid">
+    <div>
+      <p class="eyebrow">Phone first · {site.area.short}</p>
+      <h2 id={`${id}-title`}>{title}</h2>
+      <p class="lede">{body}</p>
+    </div>
+    <div class="cta-band__actions">
+      <CtaPair track={track} />
+      <ul class="chips">
+        <li class="chip"><Icon name="clock" />{site.hours.short}</li>
+        <li class="chip"><Icon name="pin" />Vaughan · Woodbridge included</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band__grid {
+    display: grid;
+    gap: 28px 64px;
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .cta-band__grid {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    }
+  }
+
+  .cta-band h2 {
+    margin-bottom: 14px;
+  }
+
+  .cta-band__actions {
+    display: grid;
+    gap: 18px;
+    justify-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .cta-band__actions {
+      justify-items: end;
+    }
+    .cta-band__actions .chips {
+      justify-content: flex-end;
+    }
+  }
+</style>

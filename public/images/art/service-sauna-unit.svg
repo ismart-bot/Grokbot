@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="slat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a4038"/>
+      <stop offset="0.5" stop-color="#3b332d"/>
+      <stop offset="1" stop-color="#2b2521"/>
+    </linearGradient>
+    <pattern id="slats" width="1200" height="90" patternUnits="userSpaceOnUse">
+      <rect width="1200" height="84" fill="url(#slat)"/>
+      <rect y="84" width="1200" height="6" fill="#161311"/>
+    </pattern>
+    <filter id="wood" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.004 0.12" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 0.1  0 0 0 0 0.08  0 0 0 0 0.06  0 0 0 0.35 0"/>
+    </filter>
+    <linearGradient id="heater" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#252527"/>
+      <stop offset="0.4" stop-color="#4c4d51"/>
+      <stop offset="1" stop-color="#1c1c1e"/>
+    </linearGradient>
+    <radialGradient id="stone" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#8d8d90"/>
+      <stop offset="0.6" stop-color="#4b4b4e"/>
+      <stop offset="1" stop-color="#232325"/>
+    </radialGradient>
+    <radialGradient id="shade" cx="0.4" cy="0.35" r="0.9">
+      <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="heat" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#slats)"/>
+  <rect width="1200" height="900" filter="url(#wood)"/>
+  <g filter="url(#heat)" fill="#e8e2da" opacity="0.1">
+    <path d="M330 420 C300 330 380 290 350 200 C330 140 380 100 390 40 L450 40 C440 110 400 150 420 210 C450 300 370 340 400 420 Z"/>
+    <path d="M520 420 C500 340 570 300 540 220 C520 160 570 120 570 60 L620 70 C610 130 580 170 600 230 C620 310 560 350 580 420 Z"/>
+  </g>
+  <rect x="220" y="500" width="520" height="330" rx="14" fill="url(#heater)"/>
+  <g stroke="#111" stroke-width="6" opacity="0.6">
+    <path d="M260 560 V790"/><path d="M300 560 V790"/><path d="M340 560 V790"/><path d="M380 560 V790"/>
+    <path d="M580 560 V790"/><path d="M620 560 V790"/><path d="M660 560 V790"/><path d="M700 560 V790"/>
+  </g>
+  <rect x="410" y="620" width="140" height="90" rx="10" fill="#161617" stroke="#5a5b5f" stroke-width="2"/>
+  <circle cx="480" cy="665" r="26" fill="none" stroke="#63C6C1" stroke-width="4" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="480" cy="665" r="26" fill="none" stroke="#c6f2ee" stroke-width="2"/>
+  <g>
+    <ellipse cx="270" cy="490" rx="62" ry="42" fill="url(#stone)"/>
+    <ellipse cx="380" cy="478" rx="72" ry="48" fill="url(#stone)"/>
+    <ellipse cx="500" cy="486" rx="66" ry="44" fill="url(#stone)"/>
+    <ellipse cx="620" cy="480" rx="70" ry="46" fill="url(#stone)"/>
+    <ellipse cx="700" cy="494" rx="52" ry="36" fill="url(#stone)"/>
+    <ellipse cx="325" cy="440" rx="58" ry="38" fill="url(#stone)"/>
+    <ellipse cx="445" cy="432" rx="64" ry="42" fill="url(#stone)"/>
+    <ellipse cx="565" cy="436" rx="60" ry="40" fill="url(#stone)"/>
+    <ellipse cx="660" cy="446" rx="50" ry="34" fill="url(#stone)"/>
+    <ellipse cx="505" cy="392" rx="54" ry="36" fill="url(#stone)"/>
+    <ellipse cx="395" cy="398" rx="48" ry="32" fill="url(#stone)"/>
+  </g>
+  <rect x="880" y="300" width="170" height="240" rx="16" fill="#1c1c1e" stroke="#55565a" stroke-width="2"/>
+  <rect x="905" y="330" width="120" height="50" rx="6" fill="#0f0f10"/>
+  <rect x="918" y="351" width="72" height="8" rx="4" fill="#63C6C1" opacity="0.9"/>
+  <circle cx="965" cy="460" r="42" fill="#141415" stroke="#4a4b4e" stroke-width="2"/>
+  <circle cx="965" cy="460" r="30" fill="none" stroke="#63C6C1" stroke-width="3" opacity="0.7"/>
+  <rect width="1200" height="900" fill="url(#shade)"/>
+</svg>

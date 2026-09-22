@@ -1,0 +1,418 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import PromiseCards from '../components/PromiseCards.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../config/site';
+import { services, serviceHref } from '../data/services';
+
+const facts = [
+  { value: '08', label: 'appliance lanes, from refrigerators to sauna units' },
+  { value: '7', label: 'days a week, 8:00am–10:00pm' },
+  { value: '1', label: 'city — Vaughan, Woodbridge included' },
+  { value: '0', label: 'gas-line or HVAC jobs, ever' },
+];
+
+const principles = [
+  {
+    icon: 'phone',
+    title: 'Phone first',
+    body: 'A real conversation beats a form. We ask about the symptom, the brand and model, and your neighbourhood, then confirm a window you can plan around.',
+  },
+  {
+    icon: 'wrench',
+    title: 'Diagnose before we quote',
+    body: 'No guessing over the phone and no parts swapped on a hunch. The technician tests the appliance in your home and explains what actually failed.',
+  },
+  {
+    icon: 'check',
+    title: 'Your approval, then the work',
+    body: 'You get a parts and labour quote before anything starts. If repair doesn’t make sense for the age or condition of your unit, we say so.',
+  },
+  {
+    icon: 'shield',
+    title: 'Warranty in writing',
+    body: 'Approved repairs carry a parts and labour warranty, with the terms written on your invoice — clear before we leave your home.',
+  },
+] as const;
+
+const doesNot = [
+  { title: 'Gas lines & gas appliances', body: 'Ovens, stoves and dryers are electric only. Gas work needs a licensed gas technician.' },
+  { title: 'HVAC', body: 'Furnaces, air conditioners, heat pumps and ductwork belong to HVAC contractors.' },
+  { title: 'Outside Vaughan', body: 'We book inside Vaughan city limits only — Woodbridge, Maple, Concord, Kleinburg and the rest of the city.' },
+  { title: 'Commercial equipment', body: 'Residential appliances only — no commercial kitchens, laundromats, walk-ins or spa systems.' },
+];
+---
+
+<BaseLayout
+  title="About Aria Appliance Repair | Vaughan Residential Appliance Specialists"
+  description="Aria Appliance Repair is a Vaughan-based residential team: eight appliance lanes, one city, Monday–Sunday 8am–10pm. Upfront quotes, parts & labour warranty on your invoice. No gas lines, no HVAC."
+>
+  <PageHero
+    eyebrow="About Aria · Vaughan"
+    title="A Vaughan repair team with a deliberately narrow lane."
+    lede="Aria Appliance Repair fixes and installs eight residential appliances, in one city, during hours we can staff properly — Monday to Sunday, 8am to 10pm. Here’s how that focus shows up on your job."
+    image="about-diagnostics"
+    track="hero-about"
+  >
+    <ul class="chips">
+      <li class="chip"><Icon name="clock" />{site.hours.short}</li>
+      <li class="chip"><Icon name="pin" />Vaughan only · Woodbridge included</li>
+    </ul>
+  </PageHero>
+
+  <section class="band band--paper band--seam" aria-labelledby="story-title">
+    <div class="frame story-grid">
+      <div class="story">
+        <p class="eyebrow">Our story</p>
+        <h2 id="story-title">Why we stay narrow</h2>
+        <p>
+          Most appliance calls in Vaughan come down to the same machines: the fridge, the oven and stove, the washer
+          and dryer, the dishwasher and the range hood — and, in more homes every year, a steam shower unit or a home
+          sauna. Those eight are the lanes we focus on, and the only ones we quote.
+        </p>
+        <p>
+          Staying inside Vaughan — Woodbridge, Maple, Concord, Kleinburg and the rest of the city — keeps drive times
+          short, which is what makes same-day possible when the schedule allows. It also means we’d rather tell you
+          honestly that today is full than promise a window we can’t keep.
+        </p>
+        <p>
+          And we’re clear about what we don’t touch. Gas lines and gas appliances need a licensed gas technician.
+          Furnaces, air conditioners and heat pumps belong to HVAC contractors. If your job belongs to another trade,
+          you’ll hear it on the phone — not after a wasted visit.
+        </p>
+      </div>
+      <aside class="facts" aria-label="Aria at a glance">
+        <dl class="facts__list">
+          {
+            facts.map((f) => (
+              <div>
+                <dt>{f.value}</dt>
+                <dd>{f.label}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div class="facts__nap">
+          <a class="facts__phone" href={site.phone.href} data-track="call-about-facts">
+            <Icon name="phone" size={22} />{site.phone.display}
+          </a>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <p>{site.hours.long} · Vaughan, Ontario</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="band band--ink" aria-labelledby="how-title">
+    <div class="frame">
+      <SectionHead eyebrow="How we work" title="Four habits on every job" id="how-title">
+        <p>
+          Nothing fancy — just the things homeowners tell us they wish every repair visit had. We hold ourselves to
+          them in every Vaughan kitchen and laundry room.
+        </p>
+      </SectionHead>
+      <ul class="principles">
+        {
+          principles.map((p) => (
+            <li class="card">
+              <span class="principles__icon">
+                <Icon name={p.icon} size={24} />
+              </span>
+              <h3>{p.title}</h3>
+              <p>{p.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--char" aria-labelledby="scope-title">
+    <div class="frame">
+      <SectionHead eyebrow="Scope" title="What we do — and what we don’t" id="scope-title">
+        <p>Clear lines protect your time and ours. If it’s not on the left, we’ll tell you who to call instead.</p>
+      </SectionHead>
+      <div class="scope-grid">
+        <div class="scope-col">
+          <p class="scope-col__h"><Icon name="check" size={18} />We repair &amp; install</p>
+          <ul class="scope-do">
+            {
+              services.map((s) => (
+                <li>
+                  <a href={serviceHref(s.slug)}>
+                    <span class="num">{s.num}</span>
+                    <span>{s.name}</span>
+                    <Icon name="arrow" size={16} />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="scope-note">
+            Every lane runs the same way: diagnosed in your home, quoted before any work, and covered by a parts &amp;
+            labour warranty stated on your invoice. Ovens, stoves and dryers are electric only.
+          </p>
+          <a class="link-arrow" href="/services/">Compare all eight services <Icon name="arrow" /></a>
+        </div>
+        <div class="scope-col">
+          <p class="scope-col__h"><Icon name="x" size={18} />We don’t do</p>
+          <ul class="scope-dont">
+            {
+              doesNot.map((d) => (
+                <li>
+                  <h3>{d.title}</h3>
+                  <p>{d.body}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--ink" aria-labelledby="promise-title">
+    <div class="frame">
+      <SectionHead eyebrow="Our promise" title="Three commitments you can hold us to" id="promise-title">
+        <p>Written down, not implied — the same on a fridge in Woodbridge as on a sauna heater in Kleinburg.</p>
+      </SectionHead>
+      <PromiseCards />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Talk to a Vaughan appliance specialist"
+    body={`Call ${site.phone.display} or send a request — we’ll confirm timing inside Monday–Sunday, 8am–10pm, and tell you on the phone whether it’s a job for us.`}
+    track="band-about"
+  />
+</BaseLayout>
+
+<style>
+  .story-grid {
+    display: grid;
+    gap: 40px 72px;
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .story-grid {
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    }
+  }
+
+  .story {
+    display: grid;
+    gap: 18px;
+  }
+
+  .story .eyebrow {
+    margin-bottom: -4px;
+  }
+
+  .story p:not(.eyebrow) {
+    max-width: var(--measure);
+    color: var(--on-paper-2);
+    font-size: var(--fs-lede);
+    line-height: 1.6;
+  }
+
+  .facts {
+    display: grid;
+    background: var(--char);
+    color: var(--on-dark);
+    border-radius: var(--radius-sm);
+    border-top: 4px solid var(--teal);
+    overflow: hidden;
+  }
+
+  .facts__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
+  }
+
+  .facts__list div {
+    display: grid;
+    gap: 6px;
+    align-content: start;
+    padding: 22px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .facts__list div:nth-child(odd) {
+    border-right: 1px solid var(--line-soft);
+  }
+
+  .facts__list dt {
+    font-family: var(--font-mono);
+    font-size: clamp(2.25rem, 1.8rem + 1.4vw, 3rem);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--teal);
+  }
+
+  .facts__list dd {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--on-dark-2);
+  }
+
+  .facts__nap {
+    display: grid;
+    gap: 6px;
+    padding: 22px;
+  }
+
+  .facts__nap a {
+    color: var(--on-dark);
+    overflow-wrap: anywhere;
+  }
+
+  .facts__nap .facts__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .facts__nap .facts__phone:hover {
+    color: var(--teal-hi);
+    text-decoration: underline;
+  }
+
+  .facts__nap p {
+    font-size: 0.9375rem;
+    color: var(--on-dark-2);
+  }
+
+  .principles {
+    display: grid;
+    gap: var(--gap);
+    list-style: none;
+  }
+
+  @media (min-width: 640px) {
+    .principles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .principles {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .principles .card {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    border-top: 3px solid var(--teal);
+  }
+
+  .principles__icon {
+    color: var(--teal);
+  }
+
+  .principles p {
+    color: var(--on-dark-2);
+  }
+
+  .scope-grid {
+    display: grid;
+    gap: var(--gap);
+  }
+
+  @media (min-width: 860px) {
+    .scope-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .scope-col {
+    padding: clamp(20px, 2.4vw, 30px);
+    background: var(--char-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+  }
+
+  .scope-col__h {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+
+  .scope-do,
+  .scope-dont {
+    list-style: none;
+  }
+
+  .scope-do {
+    display: grid;
+  }
+
+  @media (min-width: 520px) {
+    .scope-do {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 20px;
+    }
+  }
+
+  .scope-do a {
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    align-items: center;
+    gap: 6px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line-soft);
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .scope-do a :global(svg) {
+    color: var(--teal);
+  }
+
+  .scope-do a:hover {
+    color: var(--teal-hi);
+  }
+
+  .scope-note {
+    margin: 18px 0 14px;
+    font-size: 0.9375rem;
+    color: var(--on-dark-2);
+  }
+
+  .scope-dont {
+    display: grid;
+  }
+
+  .scope-dont li {
+    display: grid;
+    gap: 4px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .scope-dont h3 {
+    font-size: 1.0625rem;
+  }
+
+  .scope-dont p {
+    font-size: 0.9375rem;
+    color: var(--on-dark-2);
+  }
+</style>

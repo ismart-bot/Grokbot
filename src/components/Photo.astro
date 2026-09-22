@@ -1,0 +1,53 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import { imageSlots, variantWidths } from '../data/images';
+
+interface Props {
+  /** Slot name from src/data/images.ts ("slot" itself is reserved by Astro). */
+  image: keyof typeof imageSlots | string;
+  class?: string;
+  eager?: boolean;
+  sizes?: string;
+  position?: string;
+  alt?: string;
+}
+
+const { image: slot, class: className, eager = false, sizes = '100vw', position, alt } = Astro.props;
+const meta = imageSlots[slot];
+if (!meta) throw new Error(`Unknown image slot "${slot}" — add it to src/data/images.ts`);
+
+const dir = path.join(process.cwd(), 'public', 'images');
+const has = (file: string) => fs.existsSync(path.join(dir, file));
+
+const photoExt = ['jpg', 'jpeg', 'webp', 'png'].find((ext) => has(`${slot}.${ext}`));
+const artFile = `art/${slot}.svg`;
+if (!photoExt && !has(artFile)) {
+  throw new Error(`Image slot "${slot}" has neither a photo nor public/images/${artFile}`);
+}
+
+const srcset = (ext: string) =>
+  variantWidths
+    .filter((w) => has(`${slot}-${w}.${ext}`))
+    .map((w) => `/images/${slot}-${w}.${ext} ${w}w`)
+    .join(', ');
+
+const avif = photoExt ? srcset('avif') : '';
+const webp = photoExt ? srcset('webp') : '';
+const src = photoExt ? `/images/${slot}.${photoExt}` : `/images/${artFile}`;
+---
+
+<picture class={className} data-slot={slot} data-source={photoExt ? 'photo' : 'art'}>
+  {avif && <source type="image/avif" srcset={avif} sizes={sizes} />}
+  {webp && <source type="image/webp" srcset={webp} sizes={sizes} />}
+  <img
+    src={src}
+    alt={alt ?? meta.alt}
+    width={meta.width}
+    height={meta.height}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding={eager ? 'sync' : 'async'}
+    fetchpriority={eager ? 'high' : undefined}
+    style={position ? `object-position:${position}` : undefined}
+  />
+</picture>

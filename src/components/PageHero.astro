@@ -1,0 +1,174 @@
+---
+import Photo from './Photo.astro';
+import CtaPair from './CtaPair.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede: string;
+  image?: string;
+  requestLabel?: string;
+  requestTo?: string;
+  track: string;
+  imagePosition?: string;
+}
+
+const { eyebrow, title, lede, image: imageSlot, requestLabel, requestTo, track, imagePosition } = Astro.props;
+---
+
+<section class:list={['phero', { 'phero--media': imageSlot }]} aria-labelledby="page-title">
+  {
+    imageSlot && (
+      <div class="phero__media">
+        <Photo image={imageSlot} eager sizes="(min-width: 1100px) 42vw, 100vw" position={imagePosition} />
+      </div>
+    )
+  }
+  <div class="phero__copy">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 id="page-title">{title}</h1>
+    <p class="lede">{lede}</p>
+    <CtaPair id="hero-ctas" track={track} requestLabel={requestLabel} requestTo={requestTo} />
+    <slot />
+  </div>
+  {
+    Astro.slots.has('aside') && (
+      <div class="phero__aside">
+        <slot name="aside" />
+      </div>
+    )
+  }
+</section>
+
+<style>
+  .phero {
+    position: relative;
+    background: var(--ink);
+    color: var(--on-dark);
+    isolation: isolate;
+  }
+
+  /* Faint burner-ring motif so the hero is never a flat void on small screens. */
+  .phero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 60% 70% at 100% 0%, rgba(99, 198, 193, 0.08), transparent 70%),
+      repeating-radial-gradient(
+        circle at 110% -10%,
+        transparent 0 38px,
+        rgba(255, 255, 255, 0.035) 38px 39px
+      );
+    pointer-events: none;
+  }
+
+  .phero__copy {
+    display: grid;
+    justify-items: start;
+    gap: 18px;
+    padding: clamp(32px, 6vw, 56px) var(--pad-x) clamp(40px, 6vw, 64px);
+  }
+
+  .phero__copy > :global(.eyebrow) {
+    margin-bottom: -4px;
+  }
+
+  .phero__copy h1 {
+    font-size: var(--fs-h1-int);
+    max-width: 20ch;
+  }
+
+  .phero__copy :global(.cta-pair) {
+    margin-top: 6px;
+  }
+
+  .phero__media {
+    display: none;
+  }
+
+  /* Tablet: short photo band above the copy, no spine. */
+  @media (min-width: 768px) and (max-width: 1099.98px) {
+    .phero__media {
+      display: block;
+      position: relative;
+      height: clamp(160px, 24vh, 280px);
+      border-bottom: 3px solid var(--teal);
+    }
+    .phero__media :global(picture),
+    .phero__media :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .phero__aside {
+    padding: 0 var(--pad-x) clamp(40px, 6vw, 64px);
+  }
+
+  /* Desktop: copy on the content grid, photo bleeds to the right edge, 4px teal spine at the join. */
+  @media (min-width: 1100px) {
+    .phero {
+      display: grid;
+      grid-template-columns:
+        minmax(var(--pad-x), 1fr)
+        min(calc((100% - 2 * var(--pad-x)) * 0.58), calc(var(--frame) * 0.58))
+        min(calc((100% - 2 * var(--pad-x)) * 0.42), calc(var(--frame) * 0.42))
+        minmax(var(--pad-x), 1fr);
+      min-height: clamp(480px, 60vh, 640px);
+    }
+
+    .phero::before {
+      display: none;
+    }
+
+    .phero__copy {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: center;
+      padding: 72px 56px 72px 0;
+    }
+
+    .phero__media {
+      display: block;
+      position: relative;
+      grid-column: 3 / 5;
+      grid-row: 1;
+      border-left: 4px solid var(--teal);
+    }
+
+    .phero__media :global(picture),
+    .phero__media :global(img) {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .phero__media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(26, 26, 27, 0.35), transparent 30%);
+      pointer-events: none;
+    }
+
+    .phero:not(.phero--media) .phero__copy {
+      grid-column: 2;
+    }
+
+    .phero__aside {
+      grid-column: 3;
+      grid-row: 1;
+      align-self: center;
+      padding: 72px 0;
+    }
+
+    .phero:not(.phero--media) {
+      min-height: 0;
+    }
+  }
+</style>

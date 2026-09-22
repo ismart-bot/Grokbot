@@ -1,0 +1,93 @@
+---
+interface Props {
+  steps: readonly { title: string; body: string }[];
+}
+const { steps } = Astro.props;
+---
+
+<ol class="steps">
+  {
+    steps.map((step, i) => (
+      <li class="step">
+        <span class="step__num" aria-hidden="true">
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        <h3>
+          <span class="sr-only">Step {i + 1}: </span>
+          {step.title}
+        </h3>
+        <p>{step.body}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .steps {
+    display: grid;
+    gap: 28px var(--gap);
+    list-style: none;
+    counter-reset: step;
+  }
+
+  @media (min-width: 860px) {
+    .steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .step {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    padding-top: 22px;
+    border-top: 2px solid var(--teal);
+  }
+
+  :global(.band--paper) .step,
+  :global(.band--paper-2) .step {
+    border-top-color: var(--teal-deep);
+  }
+
+  .step__num {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 1.6rem + 1.2vw, 2.75rem);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--teal);
+  }
+
+  :global(.band--paper) .step__num,
+  :global(.band--paper-2) .step__num {
+    color: var(--teal-deep);
+  }
+
+  @media (min-width: 860px) {
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: -7px;
+      right: -2px;
+      width: 12px;
+      height: 12px;
+      border-top: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+      transform: rotate(45deg);
+      color: var(--teal);
+    }
+    :global(.band--paper) .step:not(:last-child)::after,
+    :global(.band--paper-2) .step:not(:last-child)::after {
+      color: var(--teal-deep);
+    }
+  }
+
+  .step p {
+    color: var(--on-dark-2);
+  }
+
+  :global(.band--paper) .step p,
+  :global(.band--paper-2) .step p {
+    color: var(--on-paper-2);
+  }
+</style>
