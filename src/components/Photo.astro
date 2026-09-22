@@ -4,7 +4,8 @@ import path from 'node:path';
 import { imageSlots, variantWidths } from '../data/images';
 
 interface Props {
-  slot: keyof typeof imageSlots | string;
+  /** Slot name from src/data/images.ts ("slot" itself is reserved by Astro). */
+  image: keyof typeof imageSlots | string;
   class?: string;
   eager?: boolean;
   sizes?: string;
@@ -12,7 +13,7 @@ interface Props {
   alt?: string;
 }
 
-const { slot, class: className, eager = false, sizes = '100vw', position, alt } = Astro.props;
+const { image: slot, class: className, eager = false, sizes = '100vw', position, alt } = Astro.props;
 const meta = imageSlots[slot];
 if (!meta) throw new Error(`Unknown image slot "${slot}" — add it to src/data/images.ts`);
 

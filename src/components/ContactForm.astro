@@ -40,7 +40,8 @@ const thankYou = new URL('/thank-you/', origin).href;
         inputmode="tel"
         autocomplete="tel"
         placeholder="Best number to reach you"
-        pattern="[0-9+()\-.\s]{7,}"
+        pattern="[\d\s\(\)\+\.\-]{7,}"
+        title="Phone number, e.g. 905-555-0142"
         required
       />
     </div>

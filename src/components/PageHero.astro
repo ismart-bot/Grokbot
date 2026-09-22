@@ -6,21 +6,21 @@ interface Props {
   eyebrow: string;
   title: string;
   lede: string;
-  slot?: string;
+  image?: string;
   requestLabel?: string;
   requestTo?: string;
   track: string;
   imagePosition?: string;
 }
 
-const { eyebrow, title, lede, slot: imageSlot, requestLabel, requestTo, track, imagePosition } = Astro.props;
+const { eyebrow, title, lede, image: imageSlot, requestLabel, requestTo, track, imagePosition } = Astro.props;
 ---
 
 <section class:list={['phero', { 'phero--media': imageSlot }]} aria-labelledby="page-title">
   {
     imageSlot && (
       <div class="phero__media">
-        <Photo slot={imageSlot} eager sizes="(min-width: 1100px) 42vw, 100vw" position={imagePosition} />
+        <Photo image={imageSlot} eager sizes="(min-width: 1100px) 42vw, 100vw" position={imagePosition} />
       </div>
     )
   }
@@ -93,7 +93,7 @@ const { eyebrow, title, lede, slot: imageSlot, requestLabel, requestTo, track, i
     .phero__media {
       display: block;
       position: relative;
-      height: clamp(200px, 30vh, 300px);
+      height: clamp(160px, 24vh, 280px);
       border-bottom: 3px solid var(--teal);
     }
     .phero__media :global(picture),
